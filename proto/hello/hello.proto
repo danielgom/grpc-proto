@@ -14,5 +14,5 @@ message HelloResponse {
 }
 
 service HelloService {
-  rpc Hello(HelloRequest) returns (HelloResponse) {};
+  rpc Salute(HelloRequest) returns (HelloResponse) {};
 }
