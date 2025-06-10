@@ -126,10 +126,12 @@ const file_proto_hello_hello_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x10\n" +
 	"\x03age\x18\x02 \x01(\tR\x03age\"%\n" +
 	"\rHelloResponse\x12\x14\n" +
-	"\x05greet\x18\x01 \x01(\tR\x05greet2\x87\x01\n" +
+	"\x05greet\x18\x01 \x01(\tR\x05greet2\x9a\x02\n" +
 	"\fHelloService\x125\n" +
 	"\x06Salute\x12\x13.hello.HelloRequest\x1a\x14.hello.HelloResponse\"\x00\x12@\n" +
-	"\x0fMultipleSalutes\x12\x13.hello.HelloRequest\x1a\x14.hello.HelloResponse\"\x000\x01B3Z1github.com/danielgom/grpc-proto/protogen/go/hellob\x06proto3"
+	"\x0fMultipleSalutes\x12\x13.hello.HelloRequest\x1a\x14.hello.HelloResponse\"\x000\x01\x12?\n" +
+	"\x0eSaluteEveryone\x12\x13.hello.HelloRequest\x1a\x14.hello.HelloResponse\"\x00(\x01\x12P\n" +
+	"\x1dMultipleSalutesSaluteEveryone\x12\x13.hello.HelloRequest\x1a\x14.hello.HelloResponse\"\x00(\x010\x01B3Z1github.com/danielgom/grpc-proto/protogen/go/hellob\x06proto3"
 
 var (
 	file_proto_hello_hello_proto_rawDescOnce sync.Once
@@ -151,10 +153,14 @@ var file_proto_hello_hello_proto_goTypes = []any{
 var file_proto_hello_hello_proto_depIdxs = []int32{
 	0, // 0: hello.HelloService.Salute:input_type -> hello.HelloRequest
 	0, // 1: hello.HelloService.MultipleSalutes:input_type -> hello.HelloRequest
-	1, // 2: hello.HelloService.Salute:output_type -> hello.HelloResponse
-	1, // 3: hello.HelloService.MultipleSalutes:output_type -> hello.HelloResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	0, // 2: hello.HelloService.SaluteEveryone:input_type -> hello.HelloRequest
+	0, // 3: hello.HelloService.MultipleSalutesSaluteEveryone:input_type -> hello.HelloRequest
+	1, // 4: hello.HelloService.Salute:output_type -> hello.HelloResponse
+	1, // 5: hello.HelloService.MultipleSalutes:output_type -> hello.HelloResponse
+	1, // 6: hello.HelloService.SaluteEveryone:output_type -> hello.HelloResponse
+	1, // 7: hello.HelloService.MultipleSalutesSaluteEveryone:output_type -> hello.HelloResponse
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
