@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package bank;
+
+import "proto/google/date.proto";
+
+option go_package = "github.com/danielgom/grpc-proto/protogen/go/bank";
+
+message CreateAccountRequest {
+  string name = 1;
+  string currency = 2;
+  optional double currentBalance = 3 [json_name = "current_balance"];
+}
+
+message CreateAccountResponse {
+  string accountNumber = 1 [json_name = "account_number"];
+  string currency = 2;
+  double currentBalance = 3 [json_name = "current_balance"];
+  google.type.Date createdAt = 4 [json_name = "created_at"];
+}
+
+message CurrentBalanceRequest {
+  string accountNumber = 1 [json_name = "account_number"];
+}
+
+message CurrentBalanceResponse {
+  double amount = 1;
+  google.type.Date currentDate = 2 [json_name = "current_date"];
+}

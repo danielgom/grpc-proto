@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package bank;
+
+import "proto/google/date.proto";
+
+option go_package = "github.com/danielgom/grpc-proto/protogen/go/bank";
+
+message CreateExchangeRateRequest {
+  string fromCurrency = 1 [json_name = "from_currency"];
+  string toCurrency = 2 [json_name = "from_currency"];
+  double rate = 3 [json_name = "from_currency"];
+  google.type.Date validFrom = 4 [json_name = "valid_from"];
+  google.type.Date validTo = 5 [json_name = "valid_to"];
+}
+
+message CreateExchangeRateResponse {
+  string exchangeRateUUID = 1 [json_name = "exchange_rate_uuid"];
+}
+
+message ExchangeRateRequest {
+  string fromCurrency = 1 [json_name = "from_currency"];
+  string toCurrency = 2 [json_name = "to_currency"];
+}
+
+message ExchangeRateResponse {
+  string fromCurrency = 1 [json_name = "from_currency"];
+  string toCurrency = 2 [json_name = "to_currency"];
+  double rate = 3;
+  string timestamp = 4;
+}
