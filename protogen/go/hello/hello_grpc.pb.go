@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	HelloService_Salute_FullMethodName = "/hello.HelloService/Salute"
+	HelloService_Salute_FullMethodName          = "/hello.HelloService/Salute"
+	HelloService_MultipleSalutes_FullMethodName = "/hello.HelloService/MultipleSalutes"
 )
 
 // HelloServiceClient is the client API for HelloService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type HelloServiceClient interface {
 	Salute(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
+	MultipleSalutes(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[HelloResponse], error)
 }
 
 type helloServiceClient struct {
@@ -47,11 +49,31 @@ func (c *helloServiceClient) Salute(ctx context.Context, in *HelloRequest, opts 
 	return out, nil
 }
 
+func (c *helloServiceClient) MultipleSalutes(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[HelloResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HelloService_ServiceDesc.Streams[0], HelloService_MultipleSalutes_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[HelloRequest, HelloResponse]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HelloService_MultipleSalutesClient = grpc.ServerStreamingClient[HelloResponse]
+
 // HelloServiceServer is the server API for HelloService service.
 // All implementations must embed UnimplementedHelloServiceServer
 // for forward compatibility.
 type HelloServiceServer interface {
 	Salute(context.Context, *HelloRequest) (*HelloResponse, error)
+	MultipleSalutes(*HelloRequest, grpc.ServerStreamingServer[HelloResponse]) error
 	mustEmbedUnimplementedHelloServiceServer()
 }
 
@@ -64,6 +86,9 @@ type UnimplementedHelloServiceServer struct{}
 
 func (UnimplementedHelloServiceServer) Salute(context.Context, *HelloRequest) (*HelloResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Salute not implemented")
+}
+func (UnimplementedHelloServiceServer) MultipleSalutes(*HelloRequest, grpc.ServerStreamingServer[HelloResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method MultipleSalutes not implemented")
 }
 func (UnimplementedHelloServiceServer) mustEmbedUnimplementedHelloServiceServer() {}
 func (UnimplementedHelloServiceServer) testEmbeddedByValue()                      {}
@@ -104,6 +129,17 @@ func _HelloService_Salute_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HelloService_MultipleSalutes_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HelloRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HelloServiceServer).MultipleSalutes(m, &grpc.GenericServerStream[HelloRequest, HelloResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HelloService_MultipleSalutesServer = grpc.ServerStreamingServer[HelloResponse]
+
 // HelloService_ServiceDesc is the grpc.ServiceDesc for HelloService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -116,6 +152,12 @@ var HelloService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _HelloService_Salute_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "MultipleSalutes",
+			Handler:       _HelloService_MultipleSalutes_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "proto/hello/hello.proto",
 }
