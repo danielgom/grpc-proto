@@ -8,8 +8,8 @@ option go_package = "github.com/danielgom/grpc-proto/protogen/go/bank";
 
 message CreateExchangeRateRequest {
   string fromCurrency = 1 [json_name = "from_currency"];
-  string toCurrency = 2 [json_name = "from_currency"];
-  double rate = 3 [json_name = "from_currency"];
+  string toCurrency = 2 [json_name = "to_currency"];
+  double rate = 3;
   google.type.Date validFrom = 4 [json_name = "valid_from"];
   google.type.Date validTo = 5 [json_name = "valid_to"];
 }
