@@ -23,3 +23,7 @@ jobs:
         shell: bash
         run: |
           make pipeline-build
+      - name: Generate Go gateway source
+        shell: bash
+        run: |
+          make build-gateway
