@@ -7,7 +7,6 @@
 package bank
 
 import (
-	_ "google.golang.org/genproto/googleapis/type/date"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -211,7 +210,7 @@ var File_proto_bank_type_transaction_proto protoreflect.FileDescriptor
 
 const file_proto_bank_type_transaction_proto_rawDesc = "" +
 	"\n" +
-	"!proto/bank/type/transaction.proto\x12\x04bank\x1a\x17proto/google/date.proto\"\x94\x01\n" +
+	"!proto/bank/type/transaction.proto\x12\x04bank\"\x94\x01\n" +
 	"\x12TransactionRequest\x12%\n" +
 	"\raccountNumber\x18\x01 \x01(\tR\x0eaccount_number\x12)\n" +
 	"\x04type\x18\x02 \x01(\x0e2\x15.bank.TransactionTypeR\x04type\x12\x16\n" +

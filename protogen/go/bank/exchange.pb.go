@@ -25,8 +25,8 @@ const (
 type CreateExchangeRateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FromCurrency  string                 `protobuf:"bytes,1,opt,name=fromCurrency,json=from_currency,proto3" json:"fromCurrency,omitempty"`
-	ToCurrency    string                 `protobuf:"bytes,2,opt,name=toCurrency,json=from_currency,proto3" json:"toCurrency,omitempty"`
-	Rate          float64                `protobuf:"fixed64,3,opt,name=rate,json=from_currency,proto3" json:"rate,omitempty"`
+	ToCurrency    string                 `protobuf:"bytes,2,opt,name=toCurrency,json=to_currency,proto3" json:"toCurrency,omitempty"`
+	Rate          float64                `protobuf:"fixed64,3,opt,name=rate,proto3" json:"rate,omitempty"`
 	ValidFrom     *date.Date             `protobuf:"bytes,4,opt,name=validFrom,json=valid_from,proto3" json:"validFrom,omitempty"`
 	ValidTo       *date.Date             `protobuf:"bytes,5,opt,name=validTo,json=valid_to,proto3" json:"validTo,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -266,12 +266,12 @@ var File_proto_bank_type_exchange_proto protoreflect.FileDescriptor
 
 const file_proto_bank_type_exchange_proto_rawDesc = "" +
 	"\n" +
-	"\x1eproto/bank/type/exchange.proto\x12\x04bank\x1a\x17proto/google/date.proto\"\xe0\x01\n" +
+	"\x1eproto/bank/type/exchange.proto\x12\x04bank\x1a\x17proto/google/date.proto\"\xd5\x01\n" +
 	"\x19CreateExchangeRateRequest\x12#\n" +
-	"\ffromCurrency\x18\x01 \x01(\tR\rfrom_currency\x12!\n" +
+	"\ffromCurrency\x18\x01 \x01(\tR\rfrom_currency\x12\x1f\n" +
 	"\n" +
-	"toCurrency\x18\x02 \x01(\tR\rfrom_currency\x12\x1b\n" +
-	"\x04rate\x18\x03 \x01(\x01R\rfrom_currency\x120\n" +
+	"toCurrency\x18\x02 \x01(\tR\vto_currency\x12\x12\n" +
+	"\x04rate\x18\x03 \x01(\x01R\x04rate\x120\n" +
 	"\tvalidFrom\x18\x04 \x01(\v2\x11.google.type.DateR\n" +
 	"valid_from\x12,\n" +
 	"\avalidTo\x18\x05 \x01(\v2\x11.google.type.DateR\bvalid_to\"J\n" +

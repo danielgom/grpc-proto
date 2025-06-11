@@ -1,0 +1,387 @@
+swagger: "2.0"
+info:
+  title: proto/hello/hello.proto
+  version: version not set
+tags:
+  - name: HelloService
+  - name: BankService
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /bank.BankService/CreateAccount:
+    post:
+      operationId: BankService_CreateAccount
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/bankCreateAccountResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/bankCreateAccountRequest'
+      tags:
+        - BankService
+  /bank.BankService/CreateExchangeRate:
+    post:
+      operationId: BankService_CreateExchangeRate
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/bankCreateExchangeRateResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/bankCreateExchangeRateRequest'
+      tags:
+        - BankService
+  /bank.BankService/FetchExchangeRate:
+    post:
+      operationId: BankService_FetchExchangeRate
+      responses:
+        "200":
+          description: A successful response.(streaming responses)
+          schema:
+            type: object
+            properties:
+              result:
+                $ref: '#/definitions/bankExchangeRateResponse'
+              error:
+                $ref: '#/definitions/rpcStatus'
+            title: Stream result of bankExchangeRateResponse
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/bankExchangeRateRequest'
+      tags:
+        - BankService
+  /bank.BankService/GetCurrentBalance:
+    post:
+      operationId: BankService_GetCurrentBalance
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/bankCurrentBalanceResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/bankCurrentBalanceRequest'
+      tags:
+        - BankService
+  /bank.BankService/SummarizeTransactions:
+    post:
+      operationId: BankService_SummarizeTransactions
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/bankTransactionSummaryResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: body
+          description: ' (streaming inputs)'
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/bankTransactionRequest'
+      tags:
+        - BankService
+  /hello.HelloService/MultipleSalutes:
+    post:
+      operationId: HelloService_MultipleSalutes
+      responses:
+        "200":
+          description: A successful response.(streaming responses)
+          schema:
+            type: object
+            properties:
+              result:
+                $ref: '#/definitions/helloHelloResponse'
+              error:
+                $ref: '#/definitions/rpcStatus'
+            title: Stream result of helloHelloResponse
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/helloHelloRequest'
+      tags:
+        - HelloService
+  /hello.HelloService/MultipleSalutesSaluteEveryone:
+    post:
+      operationId: HelloService_MultipleSalutesSaluteEveryone
+      responses:
+        "200":
+          description: A successful response.(streaming responses)
+          schema:
+            type: object
+            properties:
+              result:
+                $ref: '#/definitions/helloHelloResponse'
+              error:
+                $ref: '#/definitions/rpcStatus'
+            title: Stream result of helloHelloResponse
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: body
+          description: ' (streaming inputs)'
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/helloHelloRequest'
+      tags:
+        - HelloService
+  /hello.HelloService/Salute:
+    post:
+      operationId: HelloService_Salute
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/helloHelloResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/helloHelloRequest'
+      tags:
+        - HelloService
+  /hello.HelloService/SaluteEveryone:
+    post:
+      operationId: HelloService_SaluteEveryone
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/helloHelloResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: body
+          description: ' (streaming inputs)'
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/helloHelloRequest'
+      tags:
+        - HelloService
+definitions:
+  bankCreateAccountRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      currency:
+        type: string
+      current_balance:
+        type: number
+        format: double
+  bankCreateAccountResponse:
+    type: object
+    properties:
+      account_number:
+        type: string
+      currency:
+        type: string
+      current_balance:
+        type: number
+        format: double
+      created_at:
+        $ref: '#/definitions/typeDate'
+  bankCreateExchangeRateRequest:
+    type: object
+    properties:
+      from_currency:
+        type: string
+      to_currency:
+        type: string
+      rate:
+        type: number
+        format: double
+      valid_from:
+        $ref: '#/definitions/typeDate'
+      valid_to:
+        $ref: '#/definitions/typeDate'
+  bankCreateExchangeRateResponse:
+    type: object
+    properties:
+      exchange_rate_uuid:
+        type: string
+  bankCurrentBalanceRequest:
+    type: object
+    properties:
+      account_number:
+        type: string
+  bankCurrentBalanceResponse:
+    type: object
+    properties:
+      amount:
+        type: number
+        format: double
+      current_date:
+        $ref: '#/definitions/typeDate'
+  bankExchangeRateRequest:
+    type: object
+    properties:
+      from_currency:
+        type: string
+      to_currency:
+        type: string
+  bankExchangeRateResponse:
+    type: object
+    properties:
+      from_currency:
+        type: string
+      to_currency:
+        type: string
+      rate:
+        type: number
+        format: double
+      timestamp:
+        type: string
+  bankTransactionRequest:
+    type: object
+    properties:
+      account_number:
+        type: string
+      type:
+        $ref: '#/definitions/bankTransactionType'
+      amount:
+        type: number
+        format: double
+      notes:
+        type: string
+  bankTransactionSummaryResponse:
+    type: object
+    properties:
+      account_number:
+        type: string
+      amount_in:
+        type: number
+        format: double
+      amount_out:
+        type: number
+        format: double
+      sumTotal:
+        type: number
+        format: double
+  bankTransactionType:
+    type: string
+    enum:
+      - TRANSACTION_TYPE_UNSPECIFIED
+      - TRANSACTION_TYPE_IN
+      - TRANSACTION_TYPE_OUT
+    default: TRANSACTION_TYPE_UNSPECIFIED
+  helloHelloRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      age:
+        type: string
+  helloHelloResponse:
+    type: object
+    properties:
+      greet:
+        type: string
+  protobufAny:
+    type: object
+    properties:
+      '@type':
+        type: string
+    additionalProperties: {}
+  rpcStatus:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      details:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/protobufAny'
+  typeDate:
+    type: object
+    properties:
+      year:
+        type: integer
+        format: int32
+        description: |-
+          Year of the date. Must be from 1 to 9999, or 0 to specify a date without
+          a year.
+      month:
+        type: integer
+        format: int32
+        description: |-
+          Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+          month and day.
+      day:
+        type: integer
+        format: int32
+        description: |-
+          Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
+          to specify a year by itself or a year and month where the day isn't
+          significant.
+    description: |-
+      * A full date, with non-zero year, month, and day values
+      * A month and day value, with a zero year, such as an anniversary
+      * A year on its own, with zero month and day values
+      * A year and month value, with a zero day, such as a credit card expiration
+      date
+
+      Related types are [google.type.TimeOfDay][google.type.TimeOfDay] and
+      `google.protobuf.Timestamp`.
+    title: |-
+      Represents a whole or partial calendar date, such as a birthday. The time of
+      day and time zone are either specified elsewhere or are insignificant. The
+      date is relative to the Gregorian Calendar. This can represent one of the
+      following:
